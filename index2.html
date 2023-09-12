@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document2</title>
+    <script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
+</head>
+
+<body>
+    <form id="frm">
+        <input id="txt" placeholder="sometext" required>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="resp"></div>
+    <script>
+        var txt = document.getElementById("txt");
+        var resp = document.getElementById("resp");
+
+        document.getElementById('frm').addEventListener("submit", function(e) {
+            e.preventDefault();
+            conn.send(txt.value);
+            resp.innerHTML += "chat2: "+ txt.value + "<br>";
+        })
+        var id = "chat2";
+
+        var peer = new Peer(id); // ultimate server connection
+
+        var conn;
+        peer.on('open', function(id) {
+            console.log("My peer ID:" + id);
+
+            conn = peer.connect('chat1');
+
+            conn.on('open', function () {
+                conn.send('hi!');
+                resp.innerHTML += "chat2: "+ txt.value + "<br>";
+            });
+            conn.on('data', function(m) {
+                resp.innerHTML += "chat1: " + m + "<br>";
+            })
+        });
+        
+    </script>
+</body>
+
+</html>
