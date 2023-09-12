@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user2</title>
+    <script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
+</head>
+<body>
+    <script>
+        var id = peer2;
+        var peer = new Peer(id);
+
+        peer.on('open',function(id){
+            console.log("My peer ID: " + id);
+        })
+        peer.on('connection', function(conn){
+            conn.on('open',function(){
+                conn.on('data', function(data){
+                    console.log('Received',data);
+                });
+                conn.send("Hello!");
+            });
+        });
+    </script>
+</body>
+</html>
