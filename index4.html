@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
+
+</head>
+<body>
+    <script>
+        var id = 'kashish';
+        var peer = new Peer(id);
+        peer.on('open',function(id){
+            console.log("My peer Id: " +id);
+        })
+        var conn;
+        peer.on('connection', function(conn) { 
+            conn.on('open',function(){
+                console.log('Hlw babes!');
+            });
+
+            conn.on('data',function(data){
+                console.log('Received',data);
+            });
+        });
+       
+    </script>
+    
+</body>                  
+</html>
